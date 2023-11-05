@@ -49,6 +49,7 @@ local function picker(opts)
           actions.close(prompt_bufnr)
           local selection = action_state.get_selected_entry()
           local import_path = utils.extract_path(selection.value)
+          local import = selection.value
 
           if is_relative(import_path) then
             local current_path = vim.fn.expand("%:p")
@@ -56,10 +57,10 @@ local function picker(opts)
               .. "/"
               .. selection.path
             local updated_path = update_path(import_path, sel_path, current_path)
-            import_path = utils.replace_in_quotes(selection.value, updated_path)
+            import = utils.replace_in_quotes(selection.value, updated_path)
           end
 
-          insert_line(import_path, opts.insert_at_top)
+          insert_line(import, opts.insert_at_top)
         end)
         return true
       end,
