@@ -1,5 +1,14 @@
 local M = {}
 
+M.extract_path = function(input_string)
+  local extracted_string = input_string:match("['\"]([^']+)['\"]")
+  return extracted_string
+end
+
+M.replace_in_quotes = function(str, replacement)
+  return (str:gsub("([\"'])(.-)%1", "%1" .. replacement .. "%1"))
+end
+
 M.get_filetype = function()
   local bufnr = vim.api.nvim_get_current_buf()
   local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")

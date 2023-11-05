@@ -31,7 +31,7 @@ local function find_imports(languages)
   end
 
   local types = format_types(config.extensions)
-  local flags = { "--no-heading", "--no-line-number", "--color=never", "--no-filename" }
+  local flags = { "--no-heading", "--no-line-number", "--color=never" }
 
   local find_command = "rg "
     .. types
@@ -50,7 +50,12 @@ local function find_imports(languages)
   local imports = {}
 
   for _, result in ipairs(results) do
-    table.insert(imports, { value = result })
+    local colonIndex = string.find(result, ":")
+
+    local path = string.sub(result, 1, colonIndex - 1)
+    local value = string.sub(result, colonIndex + 1)
+
+    table.insert(imports, { value = value, path = path })
   end
 
   return imports
