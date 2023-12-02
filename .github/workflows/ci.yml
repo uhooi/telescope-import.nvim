@@ -8,11 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: kdheepak/panvimdoc@main
         with:
           vimdoc: telescope-import.nvim
           demojify: true
+          treesitter: true
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "Auto generate docs"
